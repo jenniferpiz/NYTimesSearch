@@ -14,7 +14,7 @@
     <string name="fashion">Fashion</string>
     <string name="sports">Sports</string>
     <string-array name="sort_array">
-        <item>Oldest</item>
         <item>Newest</item>
+        <item>Oldest</item>
     </string-array>
 </resources>

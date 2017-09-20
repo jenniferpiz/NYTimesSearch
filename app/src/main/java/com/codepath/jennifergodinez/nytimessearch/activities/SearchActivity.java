@@ -28,6 +28,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -37,6 +38,7 @@ public class SearchActivity extends AppCompatActivity implements FilterFragment.
     Button btnSearch;
     ArrayList<Article> articles;
     ArticleArrayAdapter adapter;
+    String sQuery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +89,10 @@ public class SearchActivity extends AppCompatActivity implements FilterFragment.
             public boolean onQueryTextSubmit(String query) {
                 searchView.clearFocus();
                 Log.d("DEBUG", "onQueryTextSubmit");
-                searchArticle(query);
+                //save this query string
+                sQuery = query;
+                searchArticle(query, new HashMap());
+
                 return false;
             }
 
@@ -123,11 +128,8 @@ public class SearchActivity extends AppCompatActivity implements FilterFragment.
         filterFragment.show(fm, "fragment_filter");
     }
 
-    public void onArticleSearch(View view) {
-    }
 
-    public void searchArticle(String query) {
-        //String query = String.valueOf(etQuery.getText());
+    public void searchArticle(String query, HashMap<String, String> filterMap) {
 
         AsyncHttpClient client = new AsyncHttpClient();
         String url = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
@@ -136,6 +138,13 @@ public class SearchActivity extends AppCompatActivity implements FilterFragment.
         params.put("api-key", "3652d8a89c0747fe97783cbd961d4817");
         params.put("q", query);
         params.put("page", 0);
+
+        Toast.makeText(this, "QUERY: "+query+" nFilters="+filterMap.size(), Toast.LENGTH_SHORT).show();
+        if (filterMap.size() > 0) {
+            for (HashMap.Entry<String, String> entry : filterMap.entrySet()) {
+                params.put(entry.getKey(), entry.getValue());
+            }
+        }
 
         client.get(url, params, new JsonHttpResponseHandler() {
             @Override
@@ -154,10 +163,27 @@ public class SearchActivity extends AppCompatActivity implements FilterFragment.
     }
 
     @Override
-    public void onFinishEditDialog(String sortValue, String date,
-                                   boolean bArts, boolean bFashion, boolean bSports) {
-        Toast.makeText(this, sortValue+" " + date+" "+bArts+bFashion+bSports, Toast.LENGTH_SHORT).show();
+    public void onFinishEditDialog(String date, String sortValue, ArrayList<String> deskList) {
+        adapter.clear();
 
+        HashMap<String, String> filterMap = new HashMap<>();
 
+        if (!"".equals(date)) {
+            filterMap.put("begin_date", date);
+        }
+
+        if (!"".equals(sortValue)) {
+            filterMap.put("sort", sortValue);
+        }
+
+        if (deskList.size()>0) {
+            String sNewsDesk= "news_desk:(";
+            for (String newsDesk : deskList) {
+                sNewsDesk += "\""+newsDesk+"\"%20";
+            }
+            sNewsDesk += ")";
+            filterMap.put("fq", sNewsDesk);
+        }
+        searchArticle(sQuery, filterMap);
     }
 }
