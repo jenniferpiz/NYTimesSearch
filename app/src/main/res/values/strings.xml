@@ -4,4 +4,17 @@
     <string name="hint">Enter search query</string>
     <string name="search">Search</string>
     <string name="title_activity_article">ArticleActivity</string>
+    <string name="action_newsDesk">News Desk Values</string>
+    <string name="action_startDate">Begin Date</string>
+    <string name="action_beginDate">Begin Date</string>
+    <string name="search_title">Search</string>
+    <string name="sort_order">Sort Order</string>
+    <string name="newsDeskValues">News Desk Values</string>
+    <string name="art">Art</string>
+    <string name="fashion">Fashion</string>
+    <string name="sports">Sports</string>
+    <string-array name="sort_array">
+        <item>Oldest</item>
+        <item>Newest</item>
+    </string-array>
 </resources>

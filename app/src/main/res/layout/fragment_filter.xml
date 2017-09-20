@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="500dp">
+
+    <TextView
+        android:id="@+id/tvBeginDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/action_beginDate"
+        android:layout_marginLeft="21dp"
+        android:layout_marginStart="21dp"
+        android:layout_alignBaseline="@+id/etDate"
+        android:layout_alignBottom="@+id/etDate"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:id="@+id/etDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="14dp"
+        android:layout_marginStart="14dp"
+        android:ems="10"
+        android:inputType="date"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/tvBeginDate" />
+
+    <TextView
+        android:id="@+id/tvSortOrder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvBeginDate"
+        android:layout_alignStart="@+id/tvBeginDate"
+        android:layout_below="@+id/etDate"
+        android:layout_marginTop="36dp"
+        android:text="@string/sort_order" />
+
+    <Spinner
+        android:id="@+id/spSortOrder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/sort_array"
+        android:prompt="@string/sort_order"
+        android:layout_alignBottom="@+id/tvSortOrder"
+        android:layout_alignLeft="@+id/etDate"
+        android:layout_alignStart="@+id/etDate"
+        android:layout_alignRight="@+id/etDate"
+        android:layout_alignEnd="@+id/etDate" />
+
+    <TextView
+        android:id="@+id/tvNewsDeskValues"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvSortOrder"
+        android:layout_alignStart="@+id/tvSortOrder"
+        android:layout_below="@+id/tvSortOrder"
+        android:layout_marginTop="54dp"
+        android:text="@string/newsDeskValues" />
+
+    <CheckBox
+        android:id="@+id/cbArts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/art"
+        android:layout_below="@+id/tvNewsDeskValues"
+        android:layout_alignLeft="@+id/spSortOrder"
+        android:layout_alignStart="@+id/spSortOrder" />
+
+    <CheckBox
+        android:id="@+id/cbFashion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/fashion"
+        android:layout_below="@+id/cbArts"
+        android:layout_alignLeft="@+id/cbArts"
+        android:layout_alignStart="@+id/cbArts" />
+
+    <CheckBox
+        android:id="@+id/cbSports"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sports"
+        android:layout_below="@+id/cbFashion"
+        android:layout_alignLeft="@+id/cbFashion"
+        android:layout_alignStart="@+id/cbFashion" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="27dp"
+        android:text="Save"
+        android:layout_below="@+id/cbSports"
+        android:layout_alignLeft="@+id/cbSports"
+        android:layout_alignStart="@+id/cbSports" />
+</RelativeLayout>
