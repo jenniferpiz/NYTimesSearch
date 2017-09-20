@@ -21,6 +21,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.codepath.jennifergodinez.nytimessearch.R;
+import com.codepath.jennifergodinez.nytimessearch.models.Filter;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -31,12 +32,39 @@ public class FilterFragment extends DialogFragment implements SelectDateFragment
     TextView tvBeginDate, tvSortOrder, tvNewsDeskValues;
     CheckBox cbArts, cbSports, cbFashion;
     Spinner spSortOrder;
+    Filter filter = new Filter();
+
+    final static String BEGIN_DATE="BEGIN_DATE";
+    final static String SORT_ORDER="SORT_ORDER";
+    final static String NEWSDESK_LIST="NEWSDESK_LIST";
+
 
     public FilterFragment() {
     }
 
-    public static FilterFragment newInstance() {
-        return new FilterFragment();
+
+    public static FilterFragment newInstance(Filter filter) {
+        FilterFragment fragment = new FilterFragment();
+        Bundle bundle = new Bundle();
+        if (filter!= null) {
+            bundle.putString(BEGIN_DATE, filter.getDate());
+            bundle.putString(SORT_ORDER, filter.getSortOrder());
+            bundle.putStringArrayList(NEWSDESK_LIST, filter.getNewsDeskList());
+        } else {
+            bundle.putString(BEGIN_DATE, "");
+            bundle.putString(SORT_ORDER, "");
+            bundle.putStringArrayList(NEWSDESK_LIST, new ArrayList<String>());
+        }
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        filter.setDate(getArguments().getString(BEGIN_DATE));
+        filter.setSortOrder(getArguments().getString(SORT_ORDER));
+        filter.setNewsDeskList(getArguments().getStringArrayList(NEWSDESK_LIST));
     }
 
     @Override
@@ -48,13 +76,15 @@ public class FilterFragment extends DialogFragment implements SelectDateFragment
         return view;
     }
 
+
     @Override
     public void onDatePass(Calendar date) {
-        String str = new SimpleDateFormat("yyyyMMdd").format(date.getTime());
+        String str = new SimpleDateFormat("yyyy-MM-dd").format(date.getTime());
         Log.d("LOG","hello " + str);
         etBeginDate.setText(str);
 
     }
+
 
     @Override
     public void onResume() {
@@ -85,6 +115,33 @@ public class FilterFragment extends DialogFragment implements SelectDateFragment
         cbSports = (CheckBox)view.findViewById(R.id.cbSports);
         cbFashion = (CheckBox)view.findViewById(R.id.cbFashion);
 
+        //populate our filters
+        if (!"".equals(filter.getDate())) {
+            etBeginDate.setText(filter.getDate().toString());
+        }
+
+        String s = (String)spSortOrder.getItemAtPosition(0);
+         s = (String)spSortOrder.getItemAtPosition(1);
+        Log.d("DEBUG",s);
+        if (filter.getSortOrder().toString().equals(((String) spSortOrder.getItemAtPosition(0)).toLowerCase())) {
+            spSortOrder.setSelection(0);
+        } else {
+            spSortOrder.setSelection(1);
+        }
+
+        ArrayList<String> newsDeskList = filter.getNewsDeskList();
+        if (newsDeskList.size() > 0) {
+            if (newsDeskList.contains(cbArts.getText())) {
+                cbArts.setChecked(true);
+            }
+            if (newsDeskList.contains(cbFashion.getText())) {
+                cbFashion.setChecked(true);
+            }
+            if (newsDeskList.contains(cbSports.getText())) {
+                cbSports.setChecked(true);
+            }
+
+        }
         //etBeginDate.setOnEditorActionListener(this);
 
         etBeginDate.setOnClickListener(new View.OnClickListener() {
@@ -109,8 +166,8 @@ public class FilterFragment extends DialogFragment implements SelectDateFragment
                 if (cbFashion.isChecked()) { newsDeskList.add(cbFashion.getText().toString()); }
                 if (cbSports.isChecked()) { newsDeskList.add(cbSports.getText().toString()); }
 
-                listener.onFinishEditDialog(etBeginDate.getText().toString(),
-                        sortValue.toLowerCase(), newsDeskList);
+                listener.onFinishEditDialog(new Filter(etBeginDate.getText().toString(),
+                        sortValue.toLowerCase(), newsDeskList));
 
                 // Close the dialog and return back to the parent activity
                 dismiss();
@@ -129,14 +186,17 @@ public class FilterFragment extends DialogFragment implements SelectDateFragment
 
     }
 
+    //unused as using button onClickHandler
     @Override
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         if (EditorInfo.IME_ACTION_DONE == actionId) {
+            /*
             // Return input text back to activity through the implemented listener
             EditNameDialogListener listener = (EditNameDialogListener) getActivity();
             listener.onFinishEditDialog(etBeginDate.getText().toString(),
                     etBeginDate.getText().toString(), null);
             // Close the dialog and return back to the parent activity
+            */
             dismiss();
             return true;
         }
@@ -145,7 +205,7 @@ public class FilterFragment extends DialogFragment implements SelectDateFragment
 
 
     public interface EditNameDialogListener {
-        void onFinishEditDialog(String date, String sortValue, ArrayList<String> newsDeskList);
+        void onFinishEditDialog(Filter filter);
     }
 
 
