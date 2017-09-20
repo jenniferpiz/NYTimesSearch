@@ -1,4 +1,4 @@
-package com.codepath.jennifergodinez.nytimessearch.activities;
+package com.codepath.jennifergodinez.nytimessearch.fragments;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;

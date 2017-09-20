@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.codepath.jennifergodinez.nytimessearch.R;
 import com.codepath.jennifergodinez.nytimessearch.adapters.ArticleArrayAdapter;
+import com.codepath.jennifergodinez.nytimessearch.fragments.FilterFragment;
 import com.codepath.jennifergodinez.nytimessearch.models.Article;
 import com.codepath.jennifergodinez.nytimessearch.models.Filter;
 import com.loopj.android.http.AsyncHttpClient;
@@ -49,8 +50,6 @@ public class SearchActivity extends AppCompatActivity implements FilterFragment.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        //handleIntent(getIntent());
         setupViews();
 
     }
@@ -82,7 +81,6 @@ public class SearchActivity extends AppCompatActivity implements FilterFragment.
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_search, menu);
 
-
         MenuItem searchItem = menu.findItem(R.id.action_search);
 
         final SearchView searchView = (SearchView) searchItem.getActionView();
@@ -90,7 +88,6 @@ public class SearchActivity extends AppCompatActivity implements FilterFragment.
             @Override
             public boolean onQueryTextSubmit(String query) {
                 searchView.clearFocus();
-                Log.d("DEBUG", "onQueryTextSubmit");
 
                 //save this query string
                 savedQuery = query;

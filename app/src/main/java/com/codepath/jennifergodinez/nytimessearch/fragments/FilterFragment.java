@@ -1,4 +1,4 @@
-package com.codepath.jennifergodinez.nytimessearch.activities;
+package com.codepath.jennifergodinez.nytimessearch.fragments;
 
 import android.graphics.Point;
 import android.os.Bundle;
