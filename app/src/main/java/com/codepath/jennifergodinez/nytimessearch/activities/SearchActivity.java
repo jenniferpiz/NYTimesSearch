@@ -1,23 +1,22 @@
 package com.codepath.jennifergodinez.nytimessearch.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.Toast;
 
 import com.codepath.jennifergodinez.nytimessearch.R;
-import com.codepath.jennifergodinez.nytimessearch.adapters.ArticleArrayAdapter;
+import com.codepath.jennifergodinez.nytimessearch.adapters.ArticlesAdapter;
 import com.codepath.jennifergodinez.nytimessearch.fragments.FilterFragment;
 import com.codepath.jennifergodinez.nytimessearch.models.Article;
 import com.codepath.jennifergodinez.nytimessearch.models.Filter;
@@ -39,7 +38,7 @@ public class SearchActivity extends AppCompatActivity implements FilterFragment.
     GridView gvResults;
     Button btnSearch;
     ArrayList<Article> articles;
-    ArticleArrayAdapter adapter;
+    ArticlesAdapter adapter;
     String savedQuery;
     private Filter savedFilter = new Filter();
 
@@ -57,9 +56,10 @@ public class SearchActivity extends AppCompatActivity implements FilterFragment.
 
     public void setupViews() {
         //etQuery = (EditText)findViewById(R.id.etQuery);
-        gvResults = (GridView)findViewById(R.id.gvResults);
+        //gvResults = (GridView)findViewById(R.id.gvResults);
         //btnSearch = (Button)findViewById(R.id.btnSearch);
         articles = new ArrayList<Article>();
+        /*
         adapter = new ArticleArrayAdapter(this, articles);
         gvResults.setAdapter(adapter);
 
@@ -72,6 +72,18 @@ public class SearchActivity extends AppCompatActivity implements FilterFragment.
                 startActivity(i);
             }
         });
+        */
+        // Lookup the recyclerview in activity layout
+        RecyclerView rvArticles = (RecyclerView) findViewById(R.id.rvArticles);
+
+        // Initialize contacts
+        //articles = Article.createContactsList(20);
+        // Create adapter passing in the sample user data
+        adapter = new ArticlesAdapter(this, articles);
+        // Attach the adapter to the recyclerview to populate items
+        rvArticles.setAdapter(adapter);
+        // Set layout manager to position the items
+        rvArticles.setLayoutManager(new LinearLayoutManager(this));
     }
 
 
@@ -152,8 +164,10 @@ public class SearchActivity extends AppCompatActivity implements FilterFragment.
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 JSONArray articleJsonResults = null;
                 try {
+                    articles.clear();
                     articleJsonResults = response.getJSONObject("response").getJSONArray("docs");
-                    adapter.addAll(Article.fromJSONArray(articleJsonResults));
+                    articles.addAll(Article.fromJSONArray(articleJsonResults));
+                    adapter.notifyDataSetChanged();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -165,9 +179,6 @@ public class SearchActivity extends AppCompatActivity implements FilterFragment.
 
     @Override
     public void onFinishEditDialog(Filter f) {
-        //clear screen
-        adapter.clear();
-
         // save this filter
         savedFilter = f;
         searchArticle(savedQuery, f.toMap());

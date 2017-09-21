@@ -123,10 +123,10 @@ public class FilterFragment extends DialogFragment implements SelectDateFragment
         String s = (String)spSortOrder.getItemAtPosition(0);
          s = (String)spSortOrder.getItemAtPosition(1);
         Log.d("DEBUG",s);
-        if (filter.getSortOrder().toString().equals(((String) spSortOrder.getItemAtPosition(0)).toLowerCase())) {
-            spSortOrder.setSelection(0);
-        } else {
+        if (filter.getSortOrder().toString().equals(((String) spSortOrder.getItemAtPosition(1)).toLowerCase())) {
             spSortOrder.setSelection(1);
+        } else {
+            spSortOrder.setSelection(0);
         }
 
         ArrayList<String> newsDeskList = filter.getNewsDeskList();

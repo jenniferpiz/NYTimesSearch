@@ -25,7 +25,12 @@
         <activity
             android:name=".activities.ArticleActivity"
             android:label="@string/title_activity_article"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName="com.codepath.jennifergodinez.nytimessearch.activities.SearchActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.codepath.jennifergodinez.nytimessearch.activities.SearchActivity" />
+        </activity>
         <activity android:name=".fragments.FilterFragment"></activity>
     </application>
 
