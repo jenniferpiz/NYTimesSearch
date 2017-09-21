@@ -31,7 +31,6 @@ public class ArticleActivity extends AppCompatActivity {
         });
         wvArticle.loadUrl(article.getWebUrl());
 
-
     }
 
 }

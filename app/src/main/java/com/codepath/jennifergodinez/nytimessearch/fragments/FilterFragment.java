@@ -4,7 +4,6 @@ import android.graphics.Point;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -72,15 +71,13 @@ public class FilterFragment extends DialogFragment implements SelectDateFragment
                              Bundle savedInstanceState) {
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         getDialog().setCanceledOnTouchOutside(true);
-        View view = inflater.inflate(R.layout.fragment_filter, container, false);
-        return view;
+        return inflater.inflate(R.layout.fragment_filter, container, false);
     }
 
 
     @Override
     public void onDatePass(Calendar date) {
         String str = new SimpleDateFormat("yyyy-MM-dd").format(date.getTime());
-        Log.d("LOG","hello " + str);
         etBeginDate.setText(str);
 
     }
@@ -117,13 +114,10 @@ public class FilterFragment extends DialogFragment implements SelectDateFragment
 
         //populate our filters
         if (!"".equals(filter.getDate())) {
-            etBeginDate.setText(filter.getDate().toString());
+            etBeginDate.setText(filter.getDate());
         }
 
-        String s = (String)spSortOrder.getItemAtPosition(0);
-         s = (String)spSortOrder.getItemAtPosition(1);
-        Log.d("DEBUG",s);
-        if (filter.getSortOrder().toString().equals(((String) spSortOrder.getItemAtPosition(1)).toLowerCase())) {
+        if (filter.getSortOrder().equals(((String) spSortOrder.getItemAtPosition(1)).toLowerCase())) {
             spSortOrder.setSelection(1);
         } else {
             spSortOrder.setSelection(0);
@@ -161,12 +155,12 @@ public class FilterFragment extends DialogFragment implements SelectDateFragment
                 EditNameDialogListener listener = (EditNameDialogListener) getActivity();
                 String sortValue = spSortOrder.getSelectedItem().toString();
 
-                ArrayList<String> newsDeskList = new ArrayList();
+                ArrayList<String> newsDeskList = new ArrayList<String>();
                 if (cbArts.isChecked()) { newsDeskList.add(cbArts.getText().toString()); }
                 if (cbFashion.isChecked()) { newsDeskList.add(cbFashion.getText().toString()); }
                 if (cbSports.isChecked()) { newsDeskList.add(cbSports.getText().toString()); }
 
-                listener.onFinishEditDialog(new Filter(etBeginDate.getText().toString(),
+                listener.onFinishFilterDialog(new Filter(etBeginDate.getText().toString(),
                         sortValue.toLowerCase(), newsDeskList));
 
                 // Close the dialog and return back to the parent activity
@@ -176,13 +170,10 @@ public class FilterFragment extends DialogFragment implements SelectDateFragment
         });
 
 
-
-
         // Show soft keyboard automatically and request focus to field
         tvBeginDate.requestFocus();
         getDialog().getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-
 
     }
 
@@ -205,9 +196,7 @@ public class FilterFragment extends DialogFragment implements SelectDateFragment
 
 
     public interface EditNameDialogListener {
-        void onFinishEditDialog(Filter filter);
+        void onFinishFilterDialog(Filter filter);
     }
-
-
 
 }

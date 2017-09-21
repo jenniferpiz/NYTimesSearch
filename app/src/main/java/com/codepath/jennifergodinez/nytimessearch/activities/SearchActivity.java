@@ -7,13 +7,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.GridView;
-import android.widget.Toast;
 
 import com.codepath.jennifergodinez.nytimessearch.R;
 import com.codepath.jennifergodinez.nytimessearch.adapters.ArticlesAdapter;
@@ -34,9 +29,6 @@ import java.util.HashMap;
 import cz.msebera.android.httpclient.Header;
 
 public class SearchActivity extends AppCompatActivity implements FilterFragment.EditNameDialogListener {
-    EditText etQuery;
-    GridView gvResults;
-    Button btnSearch;
     ArrayList<Article> articles;
     ArticlesAdapter adapter;
     String savedQuery;
@@ -48,40 +40,22 @@ public class SearchActivity extends AppCompatActivity implements FilterFragment.
         setContentView(R.layout.activity_search);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setupViews();
 
     }
 
 
     public void setupViews() {
-        //etQuery = (EditText)findViewById(R.id.etQuery);
-        //gvResults = (GridView)findViewById(R.id.gvResults);
-        //btnSearch = (Button)findViewById(R.id.btnSearch);
         articles = new ArrayList<Article>();
-        /*
-        adapter = new ArticleArrayAdapter(this, articles);
-        gvResults.setAdapter(adapter);
 
-        gvResults.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent,  View view, int position, long id) {
-                Intent i = new Intent(getApplicationContext(), ArticleActivity.class);
-                Article article = articles.get(position);
-                i.putExtra("article", article);
-                startActivity(i);
-            }
-        });
-        */
         // Lookup the recyclerview in activity layout
         RecyclerView rvArticles = (RecyclerView) findViewById(R.id.rvArticles);
 
-        // Initialize contacts
-        //articles = Article.createContactsList(20);
-        // Create adapter passing in the sample user data
         adapter = new ArticlesAdapter(this, articles);
+
         // Attach the adapter to the recyclerview to populate items
         rvArticles.setAdapter(adapter);
+
         // Set layout manager to position the items
         rvArticles.setLayoutManager(new LinearLayoutManager(this));
     }
@@ -90,6 +64,7 @@ public class SearchActivity extends AppCompatActivity implements FilterFragment.
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_search, menu);
 
@@ -120,11 +95,9 @@ public class SearchActivity extends AppCompatActivity implements FilterFragment.
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Toast.makeText(this, "Action bar item selected! : "+item.getItemId(), Toast.LENGTH_LONG).show();
 
         switch(item.getItemId()) {
             case R.id.home:
-                Log.d("DEBUG", "up pressed?");
                 return true;
 
             case R.id.action_settings:
@@ -162,7 +135,7 @@ public class SearchActivity extends AppCompatActivity implements FilterFragment.
         client.get(url, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                JSONArray articleJsonResults = null;
+                JSONArray articleJsonResults;
                 try {
                     articles.clear();
                     articleJsonResults = response.getJSONObject("response").getJSONArray("docs");
@@ -178,7 +151,7 @@ public class SearchActivity extends AppCompatActivity implements FilterFragment.
 
 
     @Override
-    public void onFinishEditDialog(Filter f) {
+    public void onFinishFilterDialog(Filter f) {
         // save this filter
         savedFilter = f;
         searchArticle(savedQuery, f.toMap());

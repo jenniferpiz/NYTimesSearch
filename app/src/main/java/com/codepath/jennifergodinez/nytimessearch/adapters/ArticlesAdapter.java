@@ -31,7 +31,7 @@ public class ArticlesAdapter extends
     // Store the context for easy access
     private Context mContext;
 
-    // Pass in the contact array into the constructor
+    // Pass in the article list into the constructor
     public ArticlesAdapter(Context context, List<Article> articles) {
         mArticles = articles;
         mContext = context;
@@ -43,20 +43,12 @@ public class ArticlesAdapter extends
     }
 
 
-    // Provide a direct reference to each of the views within a data item
-    // Used to cache the views within the item layout for fast access
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        // Your holder should contain a member variable
-        // for any view that will be set as you render a row
         public ImageView imageView;
         public TextView tvTitle;
 
 
-        // We also create a constructor that accepts the entire item row
-        // and does the view lookups to find each subview
         public ViewHolder(View itemView) {
-            // Stores the itemView in a public final member variable that can be used
-            // to access the context from any ViewHolder instance.
             super(itemView);
 
             imageView = itemView.findViewById(R.id.ivImage);
@@ -89,22 +81,17 @@ public class ArticlesAdapter extends
         LayoutInflater inflater = LayoutInflater.from(context);
 
         // Inflate the custom layout
-        View contactView = inflater.inflate(R.layout.item_article_result, parent, false);
+        View articleView = inflater.inflate(R.layout.item_article_result, parent, false);
 
         // Return a new holder instance
-        ViewHolder viewHolder = new ViewHolder(contactView);
-        return viewHolder;
+       return new ViewHolder(articleView);
     }
 
-    // Involves populating data into the item through holder
-    @Override
+     @Override
     public void onBindViewHolder(ArticlesAdapter.ViewHolder viewHolder, int position) {
         // Get the data model based on position
         Article article = mArticles.get(position);
 
-        // Set item views based on your views and data model
-        ImageView imageView = viewHolder.imageView;
-        //imageView.setImageResource(0);
         Glide.with(getContext())
                 .load(Uri.parse(article.getThumbNail()))
                 //.placeholder(R.drawable.ic_nocover)
