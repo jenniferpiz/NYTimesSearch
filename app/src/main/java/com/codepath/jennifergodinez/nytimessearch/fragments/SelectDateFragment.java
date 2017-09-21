@@ -14,7 +14,7 @@ import java.util.Calendar;
 
 public class SelectDateFragment extends DialogFragment  {
     public interface OnDatePass {
-        public void onDatePass(Calendar date);
+        void onDatePass(Calendar date);
     }
 
     @Override

@@ -103,14 +103,14 @@ public class FilterFragment extends DialogFragment implements SelectDateFragment
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         // Get fields from view
-        tvBeginDate = (TextView) view.findViewById(R.id.tvBeginDate);
-        etBeginDate = (EditText) view.findViewById(R.id.etDate);
-        tvSortOrder = (TextView) view.findViewById(R.id.tvSortOrder);
-        spSortOrder = (Spinner) view.findViewById(R.id.spSortOrder);
-        tvNewsDeskValues = (TextView)view.findViewById(R.id.tvNewsDeskValues);
-        cbArts = (CheckBox)view.findViewById(R.id.cbArts);
-        cbSports = (CheckBox)view.findViewById(R.id.cbSports);
-        cbFashion = (CheckBox)view.findViewById(R.id.cbFashion);
+        tvBeginDate = view.findViewById(R.id.tvBeginDate);
+        etBeginDate = view.findViewById(R.id.etDate);
+        tvSortOrder = view.findViewById(R.id.tvSortOrder);
+        spSortOrder = view.findViewById(R.id.spSortOrder);
+        tvNewsDeskValues = view.findViewById(R.id.tvNewsDeskValues);
+        cbArts = view.findViewById(R.id.cbArts);
+        cbSports = view.findViewById(R.id.cbSports);
+        cbFashion = view.findViewById(R.id.cbFashion);
 
         //populate our filters
         if (!"".equals(filter.getDate())) {
@@ -148,7 +148,7 @@ public class FilterFragment extends DialogFragment implements SelectDateFragment
             }
         });
 
-        Button btn = (Button)view.findViewById(R.id.button);
+        Button btn = view.findViewById(R.id.button);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
