@@ -15,11 +15,13 @@ public class Article implements Serializable {
     String webUrl;
     String headline;
     String thumbNail;
+    String snippet;
 
     public Article(JSONObject jsonObject) {
         try {
             this.webUrl = jsonObject.getString("web_url");
             this.headline = jsonObject.getJSONObject("headline").getString("main");
+            this.snippet = jsonObject.getString("snippet");
 
             JSONArray multimedia = jsonObject.getJSONArray("multimedia");
             if (multimedia.length() > 0) {
@@ -45,6 +47,8 @@ public class Article implements Serializable {
         return thumbNail;
     }
 
+    public String getSnippet() { return snippet; }
+
     public static ArrayList<Article> fromJSONArray(JSONArray array) {
         ArrayList<Article> results = new ArrayList<>();
 
@@ -57,4 +61,5 @@ public class Article implements Serializable {
         }
         return results;
     }
+
 }

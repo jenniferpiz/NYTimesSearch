@@ -46,6 +46,7 @@ public class ArticlesAdapter extends
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public ImageView imageView;
         public TextView tvTitle;
+        public TextView tvSnippet;
 
 
         public ViewHolder(View itemView) {
@@ -53,6 +54,7 @@ public class ArticlesAdapter extends
 
             imageView = itemView.findViewById(R.id.ivImage);
             tvTitle = itemView.findViewById(R.id.tvTitle);
+            tvSnippet = itemView.findViewById(R.id.tvSnippet);
 
             itemView.setOnClickListener(this);
         }
@@ -96,8 +98,12 @@ public class ArticlesAdapter extends
                 .load(Uri.parse(article.getThumbNail()))
                 //.placeholder(R.drawable.ic_nocover)
                 .into(viewHolder.imageView);
-        TextView tvTitle = viewHolder.tvTitle;
-        tvTitle.setText(article.getHeadline());
+
+         TextView tvTitle = viewHolder.tvTitle;
+         tvTitle.setText(article.getHeadline());
+
+         TextView tvSnippet = viewHolder.tvSnippet;
+         tvSnippet.setText(article.getSnippet());
     }
 
     // Returns the total count of items in the list
