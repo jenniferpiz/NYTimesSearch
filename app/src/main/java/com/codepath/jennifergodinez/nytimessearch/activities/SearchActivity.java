@@ -175,11 +175,13 @@ public class SearchActivity extends AppCompatActivity implements FilterFragment.
                 try {
                     if (page == 0) {
                         articles.clear();
+                        adapter.notifyDataSetChanged();
+                        scrollListener.resetState();
                     }
                     articleJsonResults = response.getJSONObject("response").getJSONArray("docs");
                     articles.addAll(Article.fromJSONArray(articleJsonResults));
                     adapter.notifyDataSetChanged();
-                    scrollListener.resetState();
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
