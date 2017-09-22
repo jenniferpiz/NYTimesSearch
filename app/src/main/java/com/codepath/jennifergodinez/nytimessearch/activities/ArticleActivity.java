@@ -20,6 +20,9 @@ public class ArticleActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Article article = (Article)getIntent().getSerializableExtra("article");
+
+        getSupportActionBar().setTitle(article.getHeadline());
+
         final WebView wvArticle = (WebView)findViewById(R.id.wvArticle);
 
         wvArticle.setWebViewClient(new WebViewClient() {

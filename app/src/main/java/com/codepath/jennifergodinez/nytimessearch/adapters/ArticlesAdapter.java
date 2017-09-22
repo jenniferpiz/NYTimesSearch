@@ -91,13 +91,14 @@ public class ArticlesAdapter extends
 
      @Override
     public void onBindViewHolder(ArticlesAdapter.ViewHolder viewHolder, int position) {
-        // Get the data model based on position
-        Article article = mArticles.get(position);
+         // Get the data model based on position
+         Article article = mArticles.get(position);
 
-        Glide.with(getContext())
-                .load(Uri.parse(article.getThumbNail()))
-                //.placeholder(R.drawable.ic_nocover)
-                .into(viewHolder.imageView);
+         Glide.with(getContext())
+                 .load(Uri.parse(article.getThumbNail()))
+                 .placeholder(R.drawable.times_logo_291_black)
+                 .into(viewHolder.imageView);
+
 
          TextView tvTitle = viewHolder.tvTitle;
          tvTitle.setText(article.getHeadline());
