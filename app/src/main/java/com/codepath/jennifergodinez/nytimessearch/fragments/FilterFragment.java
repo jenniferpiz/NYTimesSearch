@@ -36,6 +36,7 @@ public class FilterFragment extends DialogFragment implements SelectDateFragment
     final static String BEGIN_DATE="BEGIN_DATE";
     final static String SORT_ORDER="SORT_ORDER";
     final static String NEWSDESK_LIST="NEWSDESK_LIST";
+    final static String SETDATE = "SETDATE";
 
 
     public FilterFragment() {
@@ -141,8 +142,16 @@ public class FilterFragment extends DialogFragment implements SelectDateFragment
         etBeginDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 SelectDateFragment newFragment = new SelectDateFragment();
+
                 newFragment.setTargetFragment(FilterFragment.this, 300);
+
+                //Create a bundle to pass the date
+                Bundle bundle = new Bundle();
+                bundle.putString(SETDATE, filter.getDate());
+                newFragment.setArguments(bundle);
+
                 newFragment.show(getFragmentManager(), "datePicker");
 
             }
