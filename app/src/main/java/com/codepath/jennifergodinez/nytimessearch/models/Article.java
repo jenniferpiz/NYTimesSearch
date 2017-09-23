@@ -3,19 +3,23 @@ package com.codepath.jennifergodinez.nytimessearch.models;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcel;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by jennifergodinez on 9/18/17.
  */
 
-public class Article implements Serializable {
+@Parcel
+public class Article {
     String webUrl;
     String headline;
     String thumbNail;
     String snippet;
+
+    public Article() {
+    }
 
     public Article(JSONObject jsonObject) {
         try {

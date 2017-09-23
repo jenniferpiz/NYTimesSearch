@@ -16,22 +16,21 @@
         android:layout_marginLeft="17dp"
         android:layout_marginRight="17dp"
         android:layout_marginStart="17dp"
-        android:scaleType="fitXY" />
+        android:scaleType="centerCrop" />
 
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:layout_marginLeft="21dp"
         android:layout_marginStart="21dp"
+        android:layout_toEndOf="@+id/ivImage"
+        android:layout_toRightOf="@+id/ivImage"
         android:ellipsize="end"
         android:maxLines="2"
         android:text="Title"
-        android:textAppearance="@android:style/TextAppearance.Material.Headline"
-        android:textSize="14sp"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/ivImage"
-        android:layout_toEndOf="@+id/ivImage" />
+        android:textAppearance="@android:style/TextAppearance.Material.Headline" />
 
     <TextView
         android:id="@+id/tvSnippet"

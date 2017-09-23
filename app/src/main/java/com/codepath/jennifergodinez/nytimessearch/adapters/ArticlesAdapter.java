@@ -15,6 +15,8 @@ import com.codepath.jennifergodinez.nytimessearch.R;
 import com.codepath.jennifergodinez.nytimessearch.activities.ArticleActivity;
 import com.codepath.jennifergodinez.nytimessearch.models.Article;
 
+import org.parceler.Parcels;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,11 +64,11 @@ public class ArticlesAdapter extends
         @Override
         public void onClick(View view) {
             int position = getAdapterPosition(); // gets item position
-            if (position != RecyclerView.NO_POSITION) { // Check if an item was deleted, but the user clicked it before the UI removed it
+            if (position != RecyclerView.NO_POSITION) {
                 Article article = mArticles.get(position);
 
                 Intent detailViewIntent = new Intent(mContext, ArticleActivity.class);
-                detailViewIntent.putExtra("article", article);
+                detailViewIntent.putExtra("article", Parcels.wrap(article));
                 mContext.startActivity(detailViewIntent);
             }
         }
