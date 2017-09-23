@@ -9,6 +9,7 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.codepath.jennifergodinez.nytimessearch.R;
 import com.codepath.jennifergodinez.nytimessearch.adapters.ArticlesAdapter;
@@ -24,6 +25,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -143,7 +145,32 @@ public class SearchActivity extends AppCompatActivity implements FilterFragment.
     }
 
 
+    public boolean isOnline() {
+        Runtime runtime = Runtime.getRuntime();
+        try {
+            Process ipProcess = runtime.exec("/system/bin/ping -c 1 8.8.8.8");
+            int     exitValue = ipProcess.waitFor();
+            return (exitValue == 0);
+        } catch (IOException e)          { e.printStackTrace(); }
+        catch (InterruptedException e) { e.printStackTrace(); }
+        return false;
+    }
+
+
+    private void resetArticles() {
+        articles.clear();
+        adapter.notifyDataSetChanged();
+        scrollListener.resetState();
+    }
+
     public void searchArticle(final int page, String query, HashMap<String, String> filterMap) {
+
+        if (!isOnline()) {
+            Toast.makeText(getApplicationContext(), "No internet detected!",
+                    Toast.LENGTH_LONG).show();
+            resetArticles();
+            return;
+        }
 
         AsyncHttpClient client = new AsyncHttpClient();
         String url = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
@@ -166,9 +193,7 @@ public class SearchActivity extends AppCompatActivity implements FilterFragment.
                 JSONArray articleJsonResults;
                 try {
                     if (page == 0) {
-                        articles.clear();
-                        adapter.notifyDataSetChanged();
-                        scrollListener.resetState();
+                        resetArticles();
                     }
                     articleJsonResults = response.getJSONObject("response").getJSONArray("docs");
                     articles.addAll(Article.fromJSONArray(articleJsonResults));
@@ -178,6 +203,13 @@ public class SearchActivity extends AppCompatActivity implements FilterFragment.
                     e.printStackTrace();
                 }
                 super.onSuccess(statusCode, headers, response);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String res, Throwable t) {
+                Toast.makeText(getApplicationContext(), "Error while trying to reach the server!",
+                        Toast.LENGTH_LONG).show();
+                resetArticles();
             }
         });
     }

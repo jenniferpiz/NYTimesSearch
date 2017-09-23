@@ -14,6 +14,8 @@
     <string name="fashion">Fashion &amp; Style"</string>
     <string name="sports">Sports</string>
     <string name="save">Save</string>
+    <string name="title">Title</string>
+    <string name="snippet">Snippet</string>
     <string-array name="sort_array">
         <item>Newest</item>
         <item>Oldest</item>

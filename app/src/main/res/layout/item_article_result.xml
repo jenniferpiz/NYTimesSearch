@@ -29,8 +29,9 @@
         android:layout_toRightOf="@+id/ivImage"
         android:ellipsize="end"
         android:maxLines="2"
-        android:text="Title"
-        android:textAppearance="@android:style/TextAppearance.Material.Headline" />
+        android:text="@string/title"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/tvSnippet"
@@ -43,9 +44,9 @@
         android:layout_marginTop="5dp"
         android:layout_toRightOf="@+id/ivImage"
         android:ellipsize="end"
-        android:fontFamily="serif"
         android:maxLines="3"
-        android:text="Snippet"
+        android:text="@string/snippet"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textSize="12sp" />
 
 </RelativeLayout>
