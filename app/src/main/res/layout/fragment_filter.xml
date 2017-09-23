@@ -7,24 +7,28 @@
         android:id="@+id/tvBeginDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/action_beginDate"
-        android:layout_marginLeft="21dp"
-        android:layout_marginStart="21dp"
         android:layout_alignBaseline="@+id/etDate"
         android:layout_alignBottom="@+id/etDate"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
+        android:text="@string/action_beginDate" />
 
     <EditText
         android:id="@+id/etDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
         android:layout_marginStart="14dp"
+        android:layout_marginTop="14dp"
+        android:layout_toEndOf="@+id/tvBeginDate"
+        android:layout_toRightOf="@+id/tvBeginDate"
         android:ems="10"
         android:inputType="date"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/tvBeginDate" />
+        android:textAlignment="center" />
 
     <TextView
         android:id="@+id/tvSortOrder"
@@ -33,7 +37,7 @@
         android:layout_alignLeft="@+id/tvBeginDate"
         android:layout_alignStart="@+id/tvBeginDate"
         android:layout_below="@+id/etDate"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="28dp"
         android:text="@string/sort_order" />
 
     <Spinner
@@ -42,6 +46,7 @@
         android:layout_height="wrap_content"
         android:entries="@array/sort_array"
         android:prompt="@string/sort_order"
+        android:layout_alignBaseline="@+id/tvSortOrder"
         android:layout_alignBottom="@+id/tvSortOrder"
         android:layout_alignLeft="@+id/etDate"
         android:layout_alignStart="@+id/etDate"
@@ -52,29 +57,29 @@
         android:id="@+id/tvNewsDeskValues"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:text="@string/newsDeskValues"
+        android:layout_below="@+id/spSortOrder"
         android:layout_alignLeft="@+id/tvSortOrder"
-        android:layout_alignStart="@+id/tvSortOrder"
-        android:layout_below="@+id/tvSortOrder"
-        android:layout_marginTop="54dp"
-        android:text="@string/newsDeskValues" />
+        android:layout_alignStart="@+id/tvSortOrder" />
 
     <CheckBox
         android:id="@+id/cbArts"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/art"
         android:layout_below="@+id/tvNewsDeskValues"
-        android:layout_alignLeft="@+id/spSortOrder"
-        android:layout_alignStart="@+id/spSortOrder" />
+        android:layout_toLeftOf="@+id/spSortOrder"
+        android:layout_toStartOf="@+id/spSortOrder"
+        android:text="@string/art" />
 
     <CheckBox
         android:id="@+id/cbFashion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/fashion"
-        android:layout_below="@+id/cbArts"
         android:layout_alignLeft="@+id/cbArts"
-        android:layout_alignStart="@+id/cbArts" />
+        android:layout_alignStart="@+id/cbArts"
+        android:layout_below="@+id/cbArts"
+        android:text="@string/fashion"/>
 
     <CheckBox
         android:id="@+id/cbSports"
@@ -89,9 +94,9 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="27dp"
-        android:text="Save"
+        android:layout_marginTop="25dp"
+        android:text="@string/save"
         android:layout_below="@+id/cbSports"
-        android:layout_alignLeft="@+id/cbSports"
-        android:layout_alignStart="@+id/cbSports" />
+        android:layout_toRightOf="@+id/tvSortOrder"
+        android:layout_toEndOf="@+id/tvSortOrder" />
 </RelativeLayout>
