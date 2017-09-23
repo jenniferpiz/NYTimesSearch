@@ -1,8 +1,12 @@
 package com.codepath.jennifergodinez.nytimessearch.adapters;
 
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.support.customtabs.CustomTabsIntent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,10 +16,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.codepath.jennifergodinez.nytimessearch.R;
-import com.codepath.jennifergodinez.nytimessearch.activities.ArticleActivity;
 import com.codepath.jennifergodinez.nytimessearch.models.Article;
-
-import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,9 +68,32 @@ public class ArticlesAdapter extends
             if (position != RecyclerView.NO_POSITION) {
                 Article article = mArticles.get(position);
 
+                /*
+                // This portion is commented to replace it with Chrome Custom Tab
                 Intent detailViewIntent = new Intent(mContext, ArticleActivity.class);
                 detailViewIntent.putExtra("article", Parcels.wrap(article));
                 mContext.startActivity(detailViewIntent);
+                */
+
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_TEXT, article.getWebUrl());
+
+                int requestCode = 100;
+
+                PendingIntent pendingIntent = PendingIntent.getActivity(mContext,
+                        requestCode,
+                        intent,
+                        PendingIntent.FLAG_UPDATE_CURRENT);
+
+
+                CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+
+                Bitmap bitmap = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_share);
+                builder.setActionButton(bitmap, "Share Link", pendingIntent, true);
+
+                CustomTabsIntent customTabsIntent = builder.build();
+                customTabsIntent.launchUrl(mContext, Uri.parse(article.getWebUrl()));
             }
         }
     }
