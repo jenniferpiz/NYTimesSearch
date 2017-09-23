@@ -3,6 +3,7 @@ package com.codepath.jennifergodinez.nytimessearch.activities;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -62,6 +63,11 @@ public class SearchActivity extends AppCompatActivity implements FilterFragment.
 
         // Attach the adapter to the recyclerview to populate items
         rvArticles.setAdapter(adapter);
+
+        // decorate with a divider
+        RecyclerView.ItemDecoration itemDecoration = new
+                DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+        rvArticles.addItemDecoration(itemDecoration);
 
         // Set layout manager to position the items
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
