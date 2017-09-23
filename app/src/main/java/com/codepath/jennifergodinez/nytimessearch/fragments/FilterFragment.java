@@ -6,13 +6,11 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.view.Display;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -26,7 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class FilterFragment extends DialogFragment implements SelectDateFragment.OnDatePass, TextView.OnEditorActionListener {
+public class FilterFragment extends DialogFragment implements SelectDateFragment.OnDatePass {
     EditText etBeginDate;
     TextView tvBeginDate, tvSortOrder, tvNewsDeskValues;
     CheckBox cbArts, cbSports, cbFashion;
@@ -44,7 +42,9 @@ public class FilterFragment extends DialogFragment implements SelectDateFragment
 
 
     public static FilterFragment newInstance(Filter filter) {
+
         FilterFragment fragment = new FilterFragment();
+
         Bundle bundle = new Bundle();
         if (filter!= null) {
             bundle.putString(BEGIN_DATE, filter.getDate());
@@ -55,13 +55,16 @@ public class FilterFragment extends DialogFragment implements SelectDateFragment
             bundle.putString(SORT_ORDER, "");
             bundle.putStringArrayList(NEWSDESK_LIST, new ArrayList<String>());
         }
+
         fragment.setArguments(bundle);
+
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         filter.setDate(getArguments().getString(BEGIN_DATE));
         filter.setSortOrder(getArguments().getString(SORT_ORDER));
         filter.setNewsDeskList(getArguments().getStringArrayList(NEWSDESK_LIST));
@@ -70,8 +73,10 @@ public class FilterFragment extends DialogFragment implements SelectDateFragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         getDialog().setCanceledOnTouchOutside(true);
+
         return inflater.inflate(R.layout.fragment_filter, container, false);
     }
 
@@ -89,12 +94,15 @@ public class FilterFragment extends DialogFragment implements SelectDateFragment
         // Store access variables for window and blank point
         Window window = getDialog().getWindow();
         Point size = new Point();
+
         // Store dimensions of the screen in `size`
         Display display = window.getWindowManager().getDefaultDisplay();
         display.getSize(size);
+
         // Set the width of the dialog proportional to 75% of the screen width
         window.setLayout((int) (size.x * 0.75), WindowManager.LayoutParams.WRAP_CONTENT);
         window.setGravity(Gravity.CENTER);
+
         // Call super onResume after sizing
         super.onResume();
     }
@@ -103,6 +111,7 @@ public class FilterFragment extends DialogFragment implements SelectDateFragment
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         // Get fields from view
         tvBeginDate = view.findViewById(R.id.tvBeginDate);
         etBeginDate = view.findViewById(R.id.etDate);
@@ -113,7 +122,7 @@ public class FilterFragment extends DialogFragment implements SelectDateFragment
         cbSports = view.findViewById(R.id.cbSports);
         cbFashion = view.findViewById(R.id.cbFashion);
 
-        //populate our filters
+        //prepopulate our filters
         if (!"".equals(filter.getDate())) {
             etBeginDate.setText(filter.getDate());
         }
@@ -135,9 +144,7 @@ public class FilterFragment extends DialogFragment implements SelectDateFragment
             if (newsDeskList.contains(cbSports.getText())) {
                 cbSports.setChecked(true);
             }
-
         }
-        //etBeginDate.setOnEditorActionListener(this);
 
         etBeginDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,15 +168,17 @@ public class FilterFragment extends DialogFragment implements SelectDateFragment
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EditNameDialogListener listener = (EditNameDialogListener) getActivity();
+
+                OnFinishFilter onPassFilter = (OnFinishFilter) getActivity();
+
                 String sortValue = spSortOrder.getSelectedItem().toString();
 
-                ArrayList<String> newsDeskList = new ArrayList<String>();
+                ArrayList<String> newsDeskList = new ArrayList<>();
                 if (cbArts.isChecked()) { newsDeskList.add(cbArts.getText().toString()); }
                 if (cbFashion.isChecked()) { newsDeskList.add(cbFashion.getText().toString()); }
                 if (cbSports.isChecked()) { newsDeskList.add(cbSports.getText().toString()); }
 
-                listener.onFinishFilterDialog(new Filter(etBeginDate.getText().toString(),
+                onPassFilter.onFinishFilterDialog(new Filter(etBeginDate.getText().toString(),
                         sortValue.toLowerCase(), newsDeskList));
 
                 // Close the dialog and return back to the parent activity
@@ -178,33 +187,10 @@ public class FilterFragment extends DialogFragment implements SelectDateFragment
             }
         });
 
-
-        // Show soft keyboard automatically and request focus to field
-        tvBeginDate.requestFocus();
-        getDialog().getWindow().setSoftInputMode(
-                WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-
-    }
-
-    //unused as using button onClickHandler
-    @Override
-    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-        if (EditorInfo.IME_ACTION_DONE == actionId) {
-            /*
-            // Return input text back to activity through the implemented listener
-            EditNameDialogListener listener = (EditNameDialogListener) getActivity();
-            listener.onFinishEditDialog(etBeginDate.getText().toString(),
-                    etBeginDate.getText().toString(), null);
-            // Close the dialog and return back to the parent activity
-            */
-            dismiss();
-            return true;
-        }
-        return false;
     }
 
 
-    public interface EditNameDialogListener {
+    public interface OnFinishFilter {
         void onFinishFilterDialog(Filter filter);
     }
 

@@ -29,7 +29,7 @@ import java.util.HashMap;
 
 import cz.msebera.android.httpclient.Header;
 
-public class SearchActivity extends AppCompatActivity implements FilterFragment.EditNameDialogListener {
+public class SearchActivity extends AppCompatActivity implements FilterFragment.OnFinishFilter {
     ArrayList<Article> articles;
     ArticlesAdapter adapter;
     String savedQuery;
@@ -39,9 +39,12 @@ public class SearchActivity extends AppCompatActivity implements FilterFragment.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_search);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         setupViews();
 
     }
@@ -69,7 +72,7 @@ public class SearchActivity extends AppCompatActivity implements FilterFragment.
                 // Add whatever code is needed to append new items to the bottom of the list
                 final int curSize = adapter.getItemCount();
 
-                loadNextDataFromApi(page);
+                searchArticle(page, savedQuery, savedFilter.toMap());
 
                 view.post(new Runnable() {
                     @Override
@@ -84,18 +87,6 @@ public class SearchActivity extends AppCompatActivity implements FilterFragment.
     }
 
 
-    public void loadNextDataFromApi(int page) {
-        // Send an API request to retrieve appropriate paginated data
-        //  --> Send the request including an offset value (i.e `page`) as a query parameter.
-        //  --> Deserialize and construct new model objects from the API response
-        //  --> Append the new data objects to the existing set of items inside the array of items
-        //  --> Notify the adapter of the new items made with `notifyDataSetChanged()`
-
-        searchArticle(page, savedQuery, savedFilter.toMap());
-
-    }
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -107,6 +98,7 @@ public class SearchActivity extends AppCompatActivity implements FilterFragment.
 
         final SearchView searchView = (SearchView) searchItem.getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
             @Override
             public boolean onQueryTextSubmit(String query) {
                 searchView.clearFocus();
@@ -137,9 +129,6 @@ public class SearchActivity extends AppCompatActivity implements FilterFragment.
 
             case R.id.miProfile:
                 showFilterDialog();
-                return true;
-
-            case R.id.action_settings:
                 return true;
 
             default:
