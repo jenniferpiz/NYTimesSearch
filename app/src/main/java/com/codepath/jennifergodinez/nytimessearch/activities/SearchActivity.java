@@ -135,8 +135,11 @@ public class SearchActivity extends AppCompatActivity implements FilterFragment.
             case R.id.home:
                 return true;
 
-            case R.id.action_settings:
+            case R.id.miProfile:
                 showFilterDialog();
+                return true;
+
+            case R.id.action_settings:
                 return true;
 
             default:
