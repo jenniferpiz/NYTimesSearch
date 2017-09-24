@@ -48,7 +48,9 @@ Instead of heteregenous layours, I used Times logo as the default placeholder fo
 
 Here's a walkthrough of implemented user stories:
 
-<img src='https://i.imgur.com/Gnwg8Gv.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+[DropBox Video Walkthrough](https://www.dropbox.com/s/gji3g7m8txh7xkm/NYTimesSearch3.gif?dl=0)
+
+[Imgur Video Walkthrough](https://i.imgur.com/Gnwg8Gv.gif)
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
