@@ -4,9 +4,9 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -69,8 +69,13 @@ public class SearchActivity extends AppCompatActivity implements FilterFragment.
                 DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         rvArticles.addItemDecoration(itemDecoration);
 
+        itemDecoration = new
+                DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL);
+        rvArticles.addItemDecoration(itemDecoration);
+
         // Set layout manager to position the items
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        //GridLayoutManager linearLayoutManager = new GridLayoutManager(this,  2);
+        StaggeredGridLayoutManager linearLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         rvArticles.setLayoutManager(linearLayoutManager);
 
         scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {

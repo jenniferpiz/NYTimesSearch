@@ -15,7 +15,7 @@
 
     <!-- Define your custom dialog theme here extending from base -->
     <style name="AppDialogTheme" parent="Theme.AppCompat.DayNight.Dialog">
-        <item name="colorPrimary">@color/dark_blue</item>
+        <item name="colorPrimary">@color/colorPrimaryDark</item>
         <item name="android:textColorHighlight">@color/light_blue</item>
         <item name="colorAccent">@color/dark_blue</item>
         <item name="colorControlNormal">@color/dark_blue</item>
