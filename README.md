@@ -27,7 +27,7 @@ The following **optional** features are implemented:
 
 The following **bonus** features are implemented:
 
-* [ ] Use the [RecyclerView](http://guides.codepath.com/android/Using-the-RecyclerView) with the `StaggeredGridLayoutManager` to display improve the grid of image results
+* [x] Use the [RecyclerView](http://guides.codepath.com/android/Using-the-RecyclerView) with the `StaggeredGridLayoutManager` to display improve the grid of image results
 * [ ] For different news articles that only have text or only have images, use [Heterogenous Layouts](http://guides.codepath.com/android/Heterogenous-Layouts-inside-RecyclerView) with RecyclerView
 * [x] Use Parcelable instead of Serializable using the popular [Parceler library](http://guides.codepath.com/android/Using-Parceler).
 * [ ] Leverages the [data binding support module](http://guides.codepath.com/android/Applying-Data-Binding-for-Views) to bind data into layout templates.
@@ -48,9 +48,7 @@ Instead of heteregenous layours, I used Times logo as the default placeholder fo
 
 Here's a walkthrough of implemented user stories:
 
-[DropBox Video Walkthrough](https://www.dropbox.com/s/gji3g7m8txh7xkm/NYTimesSearch3.gif?dl=0)
-
-[Imgur Video Walkthrough](https://i.imgur.com/Gnwg8Gv.gif)
+[DropBox Video Walkthrough](https://www.dropbox.com/s/1148ycofhwsefdh/NYTimesSearch4.gif?dl=0)
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
